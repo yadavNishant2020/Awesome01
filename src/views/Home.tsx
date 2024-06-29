@@ -8,6 +8,15 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ navigation }) => {
+  
+  const navigateToSignUp = () => {
+    navigation.navigate('SignUp');
+  };
+
+  const navigateToMain = () => {
+    navigation.navigate('Main');
+  };
+
   return (
     <ImageBackground
       source={require('../public/main_background.png')}
@@ -21,17 +30,18 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
 
         <View style={tw`mb-10`}>
           <CustomButton
-            onPress="SignUp"
+            onPress={navigateToSignUp} // Use function to navigate
             text="Sign Up"
             iconName="sign-in"
-            hideIcons={false} 
-            navigation={navigation}
+            hideIcons={false}
+            className='bg-[#253BFF]'
           />
           <CustomButton
-            onPress="Main"
+            onPress={navigateToMain} // Use function to navigate
             text="Continue with Email"
             iconName="envelope"
-            navigation={navigation}
+            className='bg-[#1D2939]'
+
           />
         </View>
       </View>

@@ -5,36 +5,40 @@ import { NavigationContainer } from '@react-navigation/native';
 import Home from './views/Home';
 import SignUp from './views/SignUp';
 import Competition from './views/Competition';
-import Main from './views/Mail';
+import Main from './views/Main';
+import { SearchProvider } from './SearchContext'; // Import the SearchProvider
+import SearchBar from './components/SearchBar';
+import BackArrow from './components/BackArrow'; // Import the BackArrow component
+import tw from 'twrnc';
 
 const Stack = createStackNavigator();
 
-function App() {
+const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home" >
-          <Stack.Screen name="Home" component={Home} options={{
-            headerShown: false,
-
-          }} />
-          <Stack.Screen name="SignUp" component={SignUp} options={{
-            headerShown: true,
-            headerTitle: "Create Account",
-
-          }} />
-          <Stack.Screen name="Competition" component={Competition} />
-          <Stack.Screen name="Main" component={Main} />
-        </Stack.Navigator>
-      </NavigationContainer>
+    <SafeAreaView style={tw`flex-1`}>
+      <SearchProvider>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+            <Stack.Screen name="SignUp" component={SignUp} options={{
+              headerShown: true, headerTitle: 'Create Account', headerLeft: () => <BackArrow />,
+            }} />
+            <Stack.Screen
+              name="Competition"
+              component={Competition}
+              options={{
+                headerShown: true,
+                headerTitle: '',
+                headerRight: () => <SearchBar placeholder="Search..." />,
+                headerLeft: () => <BackArrow />,
+              }}
+            />
+            <Stack.Screen name="Main" component={Main} options={{ headerShown: false }} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SearchProvider>
     </SafeAreaView>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+};
 
 export default App;
